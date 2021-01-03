@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dog Sos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-analytics.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-auth.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-database.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-storage.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="padding: 20px;">
+        <a class="navbar-brand" href="#">Dog Sos</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+          <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+              <a class="nav-link" id="logout" href="#">Logout</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    <h1 id="Admin"></h1>
+    <script>
+        var firebaseConfig = {
+    apiKey: "AIzaSyBLruLeKiXXi_cHo9vzVJz4GM7i8hkjIQ8",
+    authDomain: "dog-sos.firebaseapp.com",
+    projectId: "dog-sos",
+    storageBucket: "dog-sos.appspot.com",
+    messagingSenderId: "484643142210",
+    appId: "1:484643142210:web:ae80c2e40ccefe0a224bdb",
+    measurementId: "G-5WXV7KQT6E"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+
+  var userid=localStorage.getItem('id');
+  firebase.database().ref('Ngos/'+userid).once('value').then(
+      function(snapshot){
+          var Admin=(snapshot.val() && snapshot.val().Admin);
+
+          document.getElementById('Admin').innerHTML=Admin
+      }
+  )
+  firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    
+  } else {
+    window.location.replace("login.html")
+  }
+});
+
+const logout=document.querySelector('#logout');
+logout.addEventListener('click',(e)=>{
+    e.preventDefault();
+    firebase.auth().signOut().then(()=>{
+        console.log("logged out")
+    });
+})
+    </script>
+</body>
+</html>
