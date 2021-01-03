@@ -45,8 +45,16 @@
   firebase.database().ref('Ngos/'+userid).once('value').then(
       function(snapshot){
           var Admin=(snapshot.val() && snapshot.val().Admin);
+          console.log(Admin)
+          if (Admin===null){
+            firebase.auth().signOut().then(()=>{
+        console.log("logged out")
+    });
+    window.location.replace("login.html")
+          }else{
 
           document.getElementById('Admin').innerHTML=Admin
+          }
       }
   )
   firebase.auth().onAuthStateChanged(function(user) {
