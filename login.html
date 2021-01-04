@@ -93,6 +93,8 @@
     var id=firebase.auth().currentUser.uid;
     window.location.replace("dashboard.html")
     localStorage.setItem('id',id);
+    localStorage.setItem('email',email);
+    localStorage.setItem('password',password)
     console.log('success')
   })
   .catch((error) => {

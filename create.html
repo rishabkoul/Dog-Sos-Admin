@@ -72,12 +72,34 @@
       <div id="mySidenav" class="sidenav">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         <a href="dashboard.html">Dashboard</a>
-        <a href="create.html" id="create_account" style="display: none;">Create Account</a>
+        <a href="create.html">Create Account</a>
         <a href="#" id="logout">Logout</a>
       </div>
+
+      <div class="container">
+          <h3>Create Ngo Account</h3>
+      <form>
+        <div class="form-group mb-2">
+          <label for="exampleInputEmail1">Email address</label>
+          <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email" required>
+        </div>
+        <div class="form-group mb-2">
+          <label for="exampleInputPassword1">Password</label>
+          <input type="password" class="form-control" id="password" placeholder="Password" required>
+        </div>
+        <div class="form-group mb-2">
+            <label for="exampleInputPassword1">Name</label>
+            <input type="text" class="form-control" id="name" placeholder="Name" required>
+          </div>
+        <div class="form-group form-check mb-2">
+          <input type="checkbox" class="form-check-input" id="admin" required>
+          <label class="form-check-label" for="exampleCheck1">Admin</label>
+        </div>
+        <button type="button" onclick="Register()" class="btn btn-primary">Submit</button>
+      </form>
+      </div>
       
-    <h2>Hello <span id="email"></span></h2>
-    <h3>Admin : <span id="Admin"></span></h1>
+    
     <script>
         var firebaseConfig = {
     apiKey: "AIzaSyBLruLeKiXXi_cHo9vzVJz4GM7i8hkjIQ8",
@@ -93,7 +115,6 @@
   firebase.analytics();
 
   var userid=localStorage.getItem('id');
-  document.getElementById('email').innerHTML=localStorage.getItem('email');
   firebase.database().ref('Ngos/'+userid).once('value').then(
       function(snapshot){
           var Admin=(snapshot.val() && snapshot.val().Admin);
@@ -103,11 +124,9 @@
         console.log("logged out")
     });
     window.location.replace("login.html")
-          }else{
-            if(Admin===true){
-              document.getElementById('create_account').style.display='block';
-            }
-          document.getElementById('Admin').innerHTML=Admin
+          }else if(Admin === false){
+
+            window.location.replace("dashboard.html")
           }
       }
   )
@@ -133,6 +152,41 @@ function openNav() {
 /* Set the width of the side navigation to 0 */
 function closeNav() {
   document.getElementById("mySidenav").style.width = "0";
+}
+
+var admin=false;
+    document.getElementById("admin").addEventListener("change", function() {
+    if (this.checked) {
+        admin=true
+    }
+    else {
+        admin=false
+    }
+})
+
+function Register(){
+    var email=document.getElementById('email').value;
+    var password=document.getElementById('password').value;
+    var name=document.getElementById('name').value;
+
+    firebase.auth().createUserWithEmailAndPassword(email,password).then(function(user){
+        
+        var id=firebase.auth().currentUser.uid;
+        firebase.database().ref('Ngos/'+id).set({
+            email:email,
+            name:name,
+            Admin:admin,
+        }).then(function(){
+            alert('User Registration successfull');
+            firebase.auth().signInWithEmailAndPassword(localStorage.getItem('email'), localStorage.getItem('password'));
+        });
+
+
+    }).catch(function(error){
+        var errorcode=error.code;
+        var errormsg=error.message;
+        alert('Error: '+errormsg)
+    })
 }
     </script>
 </body>
