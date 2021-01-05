@@ -79,11 +79,14 @@
       </div>
       
       <div class="container">
+        <h3>Reported Cases</h3>
         <input type="text" name="" id="textBoxSearch" placeholder="Search By Location ..">
         <br><br>
-        <table>
+        <div class="table-responsive">
+        <table class="table">
           <thead>
             <tr>
+              <th>Id</th>
               <th>Name</th>
               <th>Dog's Breed</th>
               <th>Details</th>
@@ -95,6 +98,7 @@
           </thead>
           <tbody id="rowsReported"></tbody>
         </table>
+      </div>
       </div>
     
     <script>
@@ -154,13 +158,17 @@ function closeNav() {
   document.getElementById("mySidenav").style.width = "0";
 }
 
+
+
 document.addEventListener('DOMContentLoaded',async function(){
-const searchByLocation = async (search)=>{
+const searchByLocation = async ({search='',lastReportedId=''}={})=>{
+  console.log('hello')
   let snapshot;
   if(search===''){
     snapshot = await db.collection('Lost Dogs Reported')
   .orderBy('entryId')
-  .limit(6)
+  .startAfter(lastReportedId)
+  .limit(15)
   .get();
   }else{
     snapshot = await db.collection('Lost Dogs Reported')
@@ -172,13 +180,14 @@ return snapshot.docs.reduce((acc,doc)=>{
   const reported=doc.data();
   return acc.concat(`
   <tr>
+    <td>${reported.entryId}</td>
     <td>${reported.name}</td>
     <td>${reported.dogBreed}</td>
     <td>${reported.details}</td>
     <td>${reported.dogsCondition}</td>
     <td>${reported.email}</td>
     <td>${reported.location}</td>
-    <td>${reported.dogImage}</td>
+    <td><a href="${reported.dogImage}" target="_blank">Click Here</a></td>
   </tr>
   `);
 },'')
@@ -187,8 +196,23 @@ return snapshot.docs.reduce((acc,doc)=>{
 const textBoxSearch=document.querySelector('#textBoxSearch');
 
 const rowsReported = document.querySelector('#rowsReported');
-rowsReported.innerHTML=await searchByLocation(textBoxSearch.value);
-textBoxSearch.addEventListener('keyup',async(e)=>rowsReported.innerHTML=await searchByLocation(e.target.value))
+rowsReported.innerHTML=await searchByLocation();
+textBoxSearch.addEventListener('keyup',async(e)=>rowsReported.innerHTML=await searchByLocation({search:e.target.value}))
+
+async function lazyLoad(){
+  const scrollIsAtTheBottom=(document.documentElement.scrollHeight-window.innerHeight)>window.scrollY+2;
+  console.log(document.documentElement.scrollHeight-window.innerHeight);
+  console.log(window.scrollY)
+  if(scrollIsAtTheBottom){
+    console.log('hey')
+    const rows=Array.from(document.querySelectorAll('#rowsReported tr'));
+    const lastReportedId=rows.slice(-1)[0].firstElementChild.textContent;
+    console.log(lastReportedId)
+    rowsReported.innerHTML+=await searchByLocation({search:textBoxSearch.value,lastReportedId:lastReportedId});
+  }
+}
+window.addEventListener('scroll',lazyLoad);
+
 });
     </script>
 </body>
