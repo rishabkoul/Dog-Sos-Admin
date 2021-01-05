@@ -72,20 +72,22 @@
       <div id="mySidenav" class="sidenav">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         <a href="dashboard.html">Dashboard</a>
-        <a href="create.html" id="create_account" style="display: none;">Create Account</a>
-        <a href="accounts.html" id="view_account" style="display: none;">View Accounts</a>
+        <a href="create.html">Create Account</a>
+        <a href="accounts.html">View Accounts</a>
         <a href="#" id="logout">Logout</a>
       </div>
-      
-    <h3>NGO Accounts</h3>
-    <h4><span id="accounts"></span></h4>
-    <table id="acctable" style="width:70%" class="table">
-      <tr>
-        <th>Name</th>
-        <th>Email</th> 
-        <th>Admin</th>
-      </tr>
-    </table>
+    
+      <div class="container">
+        <h3>NGO Accounts</h3>
+        <h4><span id="accounts"></span></h4>
+        <table id="acctable" style="width:70%" class="table">
+          <tr>
+            <th>Name</th>
+            <th>Email</th> 
+            <th>Admin</th>
+          </tr>
+        </table>
+      </div>
     
     <script>
         var firebaseConfig = {
@@ -102,7 +104,6 @@
   firebase.analytics();
 
   var userid=localStorage.getItem('id');
-  
   firebase.database().ref('Ngos/'+userid).once('value').then(
       function(snapshot){
           var Admin=(snapshot.val() && snapshot.val().Admin);
@@ -112,11 +113,9 @@
         console.log("logged out")
     });
     window.location.replace("login.html")
-          }else{
-            if(Admin===true){
-              document.getElementById('create_account').style.display='block';
-              document.getElementById('view_account').style.display='block';
-            }
+          }else if(Admin === false){
+
+            window.location.replace("dashboard.html")
           }
       }
   )
