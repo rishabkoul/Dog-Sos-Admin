@@ -74,6 +74,7 @@
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         <a href="dashboard.html">Dashboard</a>
         <a href="create.html" id="create_account" style="display: none;">Create Account</a>
+        <a href="accounts.html" id="view_account" style="display: none;">View Accounts</a>
         <a href="#" id="logout">Logout</a>
       </div>
       
@@ -123,7 +124,8 @@
     window.location.replace("login.html")
           }else{
             if(Admin===true){
-              document.getElementById('create_account').style.display='block';
+              document.getElementById('create_account').style.display='block';              
+              document.getElementById('view_account').style.display='block';
             }
           }
       }
