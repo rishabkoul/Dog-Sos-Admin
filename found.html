@@ -81,14 +81,14 @@
       <div class="container">
         <ul class="nav nav-tabs mb-4 ma-4">
           <li class="nav-item">
-            <a class="nav-link active" href="#">Reported</a>
+            <a class="nav-link" href="dashboard.html">Reported</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="found.html">Found</a>
+            <a class="nav-link active" href="#">Found</a>
           </li>
         </ul>
         <h2 class="mb-4 ma-4">Welcome <span id="username"></span></h2>
-        <h3 class="mb-4 ma-4">Reported Cases</h3>
+        <h3 class="mb-4 ma-4">Found Cases</h3>
         <input type="text" name="" id="textBoxSearch" placeholder="Search By Location ..">
         <br><br>
         <div class="table-responsive">
@@ -175,13 +175,13 @@ document.addEventListener('DOMContentLoaded',async function(){
 const searchByLocation = async ({search='',lastReportedId=''}={})=>{
   let snapshot;
   if(search===''){
-    snapshot = await db.collection('Lost Dogs Reported')
+    snapshot = await db.collection('Injured Or Lost Dogs Found')
   .orderBy('entryId')
   .startAfter(lastReportedId)
   .limit(15)
   .get();
   }else{
-    snapshot = await db.collection('Lost Dogs Reported')
+    snapshot = await db.collection('Injured Or Lost Dogs Found')
   .where('location','==',search)
   .orderBy('entryId')
   .get();
