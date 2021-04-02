@@ -10,6 +10,24 @@
   <link rel="stylesheet" href="vendors/mdi/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="vendors/aos/css/aos.css">
   <link rel="stylesheet" href="css/style.min.css">
+  <style>
+    
+
+@media only screen and (min-width: 600px) {
+  /* For tablets: */
+  
+}
+
+@media only screen and (min-width: 768px) {
+  /* For desktop: */
+  .cover-image{
+      width: 50%;
+    }
+}
+    .cover-image{
+      margin-top: 10px;
+    }
+  </style>
 </head>
 <body id="body" data-spy="scroll" data-target=".navbar" data-offset="100">
   <header id="header-section">
@@ -26,7 +44,7 @@
         <ul class="navbar-nav align-items-lg-center align-items-start ml-auto">
           <li class="d-flex align-items-center justify-content-between pl-4 pl-lg-0">
             <div class="navbar-collapse-logo">
-              <img src="images/Group2.svg" alt="">
+              <span>Dog Sos</span>
             </div>
             <button class="navbar-toggler close-button" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="mdi mdi-close navbar-toggler-icon pl-5"></span>
@@ -36,13 +54,13 @@
             <a class="nav-link" href="#header-section">Home <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#features-section">About</a>
+            <a class="nav-link" href="#digital-marketing-section">About</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#digital-marketing-section">Blog</a>  
+            <a class="nav-link" href="#features-section">Features</a>  
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#feedback-section">Testimonials</a>
+            <a class="nav-link" href="#feedback-section">Developers</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="login.html">Login</a>
@@ -58,12 +76,12 @@
   <div class="banner" >
     <div class="container">
       <h1 class="font-weight-semibold">Dog Sos</h1>
-      <h6 class="font-weight-normal text-muted pb-3">Simple is a simple template with a creative design that solves all your marketing and SEO queries.</h6>
+      <h6 class="font-weight-normal text-muted pb-3">For the welfare of Dogs.</h6>
       <div>
-        <button class="btn btn-opacity-light mr-1">Get started</button>
-        <button class="btn btn-opacity-success ml-1">Learn more</button>
+        <button class="btn btn-opacity-light mr-1">Download The App</button>
+        <a class="btn btn-opacity-success ml-1" href="#features-section" >Learn more</a>
       </div>
-      <img src="images/Group171.svg" alt="" class="img-fluid">
+      <img src="images/dog-home.svg" alt="" class="img-fluid cover-image">
     </div>
   </div>
   <div class="content-wrapper">
@@ -127,7 +145,7 @@
           </div>
         </div>
       </section>     
-      <section class="case-studies" id="case-studies-section">
+      <!-- <section class="case-studies" id="case-studies-section">
         <div class="row grid-margin">
           <div class="col-12 text-center pb-5">
             <h2>Our case studies</h2>
@@ -218,7 +236,7 @@
             </div>
           </div>
         </div>
-      </section>     
+      </section>      -->
       <section class="customer-feedback" id="feedback-section">
         <div class="row">
           <div class="col-12 text-center pb-5">
@@ -378,7 +396,7 @@
         </div>  
       </section>
       <footer class="border-top">
-        <p class="text-center text-muted pt-4">Copyright © 2021 Dog Sos</p>
+        <p class="text-center text-muted pt-4">Copyright © <script>document.write(new Date().getFullYear())</script> Dog Sos</p>
       </footer>
       <!-- Modal for Contact - us Button -->
       <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
